@@ -1,0 +1,287 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html >
+	<head>
+       
+        <title>FreakApp | Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/facebook.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    </head>
+    <style type="text/css">
+    	body{
+    background-color: #f3f3f3;
+   
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #000;
+
+}
+p {
+    font-size: 0.975rem;
+    margin-bottom: .2rem;
+    line-height: 1.2rem;
+}
+
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e7eaed;
+    border-radius: 0;
+}
+.card .card-description {
+    margin-bottom: .875rem;
+    font-weight: 700;
+    font-size: 15px;
+    color: black;
+    margin-left: 12px;
+}
+
+.profile-header {
+    height: 150px;
+    width: 100%;
+    position: relative;
+}
+
+.cover-image {
+    height: 150px;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+
+.user-image {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    bottom: -50%;
+    left: 50%;
+    /* top: 50%; */
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+.user-image img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    top: -40px;
+    border: 5px solid #777;
+}
+
+.profile-card .profile-content {
+    padding: 50px 20px 30px 20px;
+}
+
+
+
+.profile-card .profile-name {
+    font-size: 1.2rem;
+    color: #3249b9;
+    font-weight: 600;
+    text-align: center;
+}
+
+.profile-card .profile-designation {
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+}
+
+.profile-card .profile-description {
+    padding: 10px;
+    font-size: 16px;
+    color: #777;
+    margin: 5px 0px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.profile-card ul.profile-info-list {
+    padding: 0;
+    margin: 10px 0;
+    list-style: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #777;
+}
+
+
+
+
+.profile-card ul.profile-info-list a {
+    text-decoration: none;
+    color:inherit;
+}
+
+
+
+.profile-card a.profile-info-list-item {
+    margin: 10px 0;
+    padding:15px;
+    background-color: #F1F2F3;
+    display: block;
+     -webkit-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+
+}
+
+.profile-card a.profile-info-list-item:hover {
+    background-color: #9E9E9E;
+    color: white;
+     -webkit-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    
+}
+
+
+.profile-card a.profile-info-list-item  i {
+    padding: 10px;
+    
+}
+
+ul.about {
+    list-style: none;
+    color: black;
+    padding:0;
+    margin-top: 17px;
+    margin-left: 15px;
+
+}
+li.about-items {
+    margin: 10px;
+    font-size: 0.9rem;
+    /* font-family: sans-serif; */
+    /* font-weight: 400; */
+}
+
+
+
+li.about-items i {
+color:#607d8b;
+}
+
+span.about-item-name {
+    width: 100px;
+    display: inline-flex;
+        margin-left: 10px;
+}
+
+
+span.about-item-detail {
+    display: inline-flex;
+    width: calc(100% - 160px);
+}
+span.about-item-detail > button{
+  margin-right: 10px;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+}
+.btn.btn-rounded {
+    border-radius: 50px;
+}
+
+a.about-item-edit {
+    float: right;
+}
+    </style>
+    
+    <body>
+        
+        <div class="wrapper">
+			<div class="box">
+				<div class="row row-offcanvas row-offcanvas-left">
+					
+					{% include 'sidebar.html' %}
+				  
+					<!-- main right col -->
+					<div class="column col-sm-10" id="main">
+						{% include 'navbar.html' %}		
+							<div class="full">
+		 <!-- partial -->
+        <div class="main-panel" style="padding:2%;margin-top: -50px;">
+      <div class="well" style="margin-top: 4%;"> 
+                <form class="form-horizontal" method="post" action="{% url 'editprofile' request.user.username %}" enctype="multipart/form-data">
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    {{error}}
+                    {% endfor %}
+                    {% endfor %}
+                                            {% csrf_token %}
+                                            <h4>Edit Profile</h4>
+                                             {{form|crispy}}
+                                             <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                                            <a href="{% url 'profile' request.user.username %}"class="btn btn-primary pull-right" type="submit">Cancel</a>
+
+                                          </form>
+                                      </div>
+
+                  <!--content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+
+            <!-- partial -->
+        <!-- main-panel ends -->			
+							  
+							</div><!-- /col-9 -->
+						</div><!-- /padding -->
+					</div>
+					<!-- /main -->
+				  
+		
+			</div>
+		</div>
+
+
+		
+        
+        <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+			$('[data-toggle=offcanvas]').click(function() {
+				$(this).toggleClass('visible-xs text-center');
+				$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+				$('.row-offcanvas').toggleClass('active');
+				$('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+				$('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+				$('#btnShow').toggle();
+			});
+        });
+          $(function () {
+      $(".datepicker").datepicker();
+    });
+        </script>
+            <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <!-- jQuery -->
+  
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body></html>

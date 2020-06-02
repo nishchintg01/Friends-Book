@@ -1,0 +1,490 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from https://bootdey.com  -->
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <title>Friends Book | Home</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">    
+    <style type="text/css">
+    .media-left, .media-body{
+        margin-left: 12px;
+        margin-top: 9px;
+    }
+    .media-object{
+        border-radius: 25px;
+    }
+.title {
+    margin-left: 16px;
+    font-size: 16px;
+    font-weight:bold;
+}
+.komen {
+    margin-top: -8px;
+    margin-left: 16px;
+    font-size:14px;
+}
+.timeline-comment-box .user {
+    float: left;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    border-radius: 30px
+}
+
+.timeline-comment-box .user img {
+    max-width: 100%;
+    max-height: 100%
+}
+
+.timeline-comment-box .user+.input {
+    margin-left: 48px
+}
+ .new{
+    font-size: 12px;
+ }   
+ .card {
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    background: #fff;
+    border-radius: .1875rem;
+    margin-bottom: 30px;
+    border: 0;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+}
+.card .header {
+    color: #424242;
+    padding: 20px;
+    position: relative;
+    box-shadow: none;
+}
+.card .header h2 {
+    color: #757575;
+    position: relative;
+}
+.card .header h2:before {
+    background: #6572b8;
+}
+.card .header h2 {
+    font-size: 15px;
+}
+.card .header h2::before {
+    position: absolute;
+    width: 2px;
+    height: 18px;
+    left: -20px;
+    top: 0;
+    content: '';
+}
+.theme-purple .card .header h2 strong {
+    color: #6572b8;
+}
+.card .header h2 small {
+    color: #9e9e9e;
+    line-height: 15px;
+}
+.card .body {
+    color: #424242;
+    font-weight: 400;
+    padding: 20px;
+}
+.new_friend_list {
+    margin-bottom: 0px;
+}
+
+.new_friend_list li .users_name {
+    color: #424242;
+    text-transform: capitalize;
+}
+.new_friend_list li .users_name {
+    margin-top: 5px;
+}
+.new_friend_list li .users_name{
+ margin-bottom: 0px;
+}
+.new_friend_list li .join_date {
+    color: #757575;
+}
+
+a {
+    outline: none !important;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}                                
+</style>
+</head>
+<body>           
+<!--Navbar -->
+{% include 'Navigationbar.html' %}
+<!--Navbar Ends-->     
+
+<!--Main Body -->
+<div class="container mt-4">
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <div class="content social-timeline">
+                <div class="">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="social-wallpaper">
+                                <img class="img-fluid" src="{{profile.cover_pic.url}}" style="width: 100%;height: 100%;">
+                            </div>
+                              {% if is_friend %}
+                              <div class="timeline-btn">
+                            <div class="dropdown show">
+                                  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-check"></i>
+                                    Friends
+                                  </a>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="{% url 'removefriend' author.id %}">Remove Friend</a>
+                                  </div>
+                                </div>
+                            </div>
+                                {% else %}
+                            <div class="timeline-btn">
+                                <a href="{% url 'send_request' author.id %}" class="btn btn-primary waves-effect waves-light m-r-10"> 
+                                Add Friend</a>
+                            </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-xs-12">
+                            <div class="social-timeline-left">
+                                <div class="card">
+                                    <div class="social-profile">
+                                        <img class="img-fluid width-100" src="{{profile.Profile_pic.url}}" alt="">
+                                        <div class="profile-hvr m-t-15">
+                                            <i class="icofont icofont-ui-edit p-r-10"></i>
+                                            <i class="icofont icofont-ui-delete"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-block social-follower">
+                                        <h4>{{profile.Full_name}}</h4>
+                                        <h5>{{profile.username}}</h5>
+                                        <div class="row follower-counter">
+                                            <div class="col-5">
+                                                <button class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="485">
+                                                <i class="fa fa-user"> {{friends.count}} Friends</i>
+                                                </button> 
+                                            </div>
+                                            <div class="col-5">
+                                                <button class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="90">
+                                                    <i class="fa fa-eye"> {{posts.count}} Posts</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-header-text">All Friends</h5>
+                                    </div>
+                                    <div class="card-block user-box">
+                                        {% for friend in friends %}
+                                        <div class="media m-b-1">
+                                            <a class="media-left" href="#!">
+                                                <img class="media-object img-radius" src="{{friend.Profile_pic.url}}" alt="User Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="user image">
+                                                {% if friend.Is_Active %}
+                                                <div class="live-status bg-danger"></div>
+                                                {% endif %}
+                                            </a>
+                                            <div class="media-body">
+                                                <div class="chat-header">{{friend.Full_name}}</div>
+                                                <div class="text-muted social-designation">{{friend.username}}</div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}                              
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-9 col-lg-8 col-md-8 col-xs-12 ">
+
+                            <div class="card social-tabs">
+                                <ul class="nav nav-tabs md-tabs tab-timeline" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Timeline</a>
+                                        <div class="slide"></div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#about" role="tab">About</a>
+                                        <div class="slide"></div>
+                                    </li>
+                              
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#friends" role="tab">Friends</a>
+                                        <div class="slide"></div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="timeline">
+                                    <div class="row">
+                                        <div class="col-md-12 timeline-dot">
+                                            <div class="social-timelines p-relative">
+                                                <div class="row timeline-right p-t-35">
+                                                    <div class="col-2 col-sm-2 col-xl-1">
+                                                    </div>
+                                                    <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
+                                                              <!--- \\\\\\\Post-->
+          {% for article in posts %}                                 
+                <div class="card social-timeline-card">            
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}" style="text-decoration-line: none;"><img class="rounded-circle" width="45" src="{{article.Author.profile.Profile_pic.url}}" alt="User profile"></a>
+                                
+                                </div>
+                                <div class="ml-2">
+                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>
+                                    <div class="h7 text-muted">{{article.Author.profile.Full_name}} </div>            
+                                </div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    <h5 class="card-title">{{article.Status}}</h5>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'like' id=article.id %}" class="card-link"><i class="fas fa-heart"></i> {{article.Likes.count}}</a>
+                        <a href="#" class="card-link" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><i class="fas fa-share"></i> Share</a>
+                    </div>
+                    <div class="card-footer">
+                    <div class="timeline-comment-box">
+                 <div class="user">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
+                    <div class="input">
+                        <form action="{% url 'writecomment' article.slug %}" method="post">
+                            {% csrf_token %}
+                               <div class="input-group">
+                                      {{form.comment}}
+                                      <span class="input-group-btn">
+                                      <button class="btn btn-primary rounded-corner" type="submit">Comment</button>
+                                      </span>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                            </div>
+                            {% if article.comments.all %}
+                            <div class="overflow-auto" style="height: 70px;">
+                        
+                            {% for comment in article.comments.all %}
+                             <div class="media">
+                                {% if request.user.username == comment.Author.profile.username %}
+                                    <div class="media-left">
+                                      <a href="{% url 'timeline' %}"><img src="{{comment.Author.profile.Profile_pic.url}}" class="media-object" style="width:40px"></a>
+                                    </div>
+                                {% else %}
+                                    <div class="media-left">
+                                      <a href="{% url 'getuserprofile' comment.Author.profile.username %}"><img src="{{comment.Author.profile.Profile_pic.url}}" class="media-object" style="width:40px"></a>
+                                    </div>
+                                {% endif %}
+                                    <div class="media-body">
+                                    {% if request.user.username == comment.Author.profile.username %}
+                                      <h4 class="media-heading title"><a href="{% url 'timeline' %}">{{comment.Author}} </a><span class="text-muted new" >{{comment.Time_stamp|naturaltime}}</span></h4>
+                                    {% else %}
+                                     <h4 class="media-heading title"><a href="{% url 'getuserprofile' comment.Author.profile.username %}">{{comment.Author}} </a><span class="text-muted new" >{{comment.Time_stamp|naturaltime}}</span></h4>
+                                    {% endif %}
+                                      <p class="komen">
+                                          {{comment.comment}}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                        
+                </div>{% endif %}</div>
+
+    {% endfor %}
+                <!-- Post /////--> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    
+                                        </div>
+                                    </div>
+                            
+                                </div>
+
+                                <div class="tab-pane" id="about">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="card-header-text">Basic Information</h5>
+                                                    <button id="edit-btn" type="button" class="btn btn-primary waves-effect waves-light f-right">
+                                                        <i class="icofont icofont-edit"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="card-block">
+                                                    <div id="view-info" class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <form>
+                                                                <table class="table table-responsive m-b-0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="social-label b-none p-t-0">Full Name
+                                                                            </th>
+                                                                            <td class="social-user-name b-none p-t-0 text-muted">{{profile.Full_name}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="social-label b-none">Gender</th>
+                                                                            <td class="social-user-name b-none text-muted">{{profile.Gender}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="social-label b-none">Birth Date</th>
+                                                                            <td class="social-user-name b-none text-muted">{{profile.Birth_day}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="social-label b-none">Martail Status</th>
+                                                                            <td class="social-user-name b-none text-muted">{{profile.Relation_status}}</td>
+                                                                        </tr>
+                                                                  
+                                                                    </tbody>
+                                                                </table>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="card-header-text">Contact Information</h5>
+                                                    <button id="edit-Contact" type="button" class="btn btn-primary waves-effect waves-light f-right">
+                                                        <i class="icofont icofont-edit"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="card-block">
+                                                    <div id="contact-info" class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <table class="table table-responsive m-b-0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th class="social-label b-none p-t-0">Mobile Number</th>
+                                                                        <td class="social-user-name b-none p-t-0 text-muted">{{profile.Phone}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="social-label b-none">Email Address</th>
+                                                                        <td class="social-user-name b-none text-muted">{{profile.Email}}</td>
+                                                                    </tr>
+                                                                
+                                                                    <tr>
+                                                                        <th class="social-label b-none p-b-0">Website</th>
+                                                                        <td class="social-user-name b-none p-b-0 text-muted">{{profile.website}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="card-header-text">Work</h5>
+                                                    <button id="edit-work" type="button" class="btn btn-primary waves-effect waves-light f-right">
+                                                        <i class="icofont icofont-edit"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="card-block">
+                                                    <div id="work-info" class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <table class="table table-responsive m-b-0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th class="social-label b-none p-t-0">Occupation &nbsp; &nbsp; &nbsp;
+                                                                        </th>
+                                                                        <td class="social-user-name b-none p-t-0 text-muted">{{profile.Profession}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                             
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="friends">
+                                    <div class="row">
+                                      <!--Friends Section-->
+                                        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="header">
+                    <h2><strong>All</strong> Friends <small></small></h2>
+                </div>
+                <div class="body">
+                    <ul class="new_friend_list list-unstyled row">
+                        {% for friend in friends %}
+                        <li class="col-lg-4 col-md-2 col-sm-6 col-4">
+                            <a href="">
+                                <img src="{{friend.Profile_pic.url}}" alt="User Image" class="img-fluid h-25">
+                                <h6 class="users_name"><center>{{friend.Full_name}}</center></h6>
+                                <small class="join_date"><center>{{friend.username}}</center></small>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+                                      <!--Friends Section-->
+                            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--Main Body Ends-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+            $("li.nav-item").click(function (e) {
+                e.preventDefault();
+                $(".nav-item").removeClass("active");
+                $(this).addClass("active");   
+            });
+        });
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+</body>
+</html>

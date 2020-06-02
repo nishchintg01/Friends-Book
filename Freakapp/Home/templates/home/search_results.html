@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="utf-8">
+    <!--  This file has been downloaded from https://bootdey.com  -->
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <title>Friends Book | Home</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">
+    <style type="text/css">
+    body{
+            background-color: #f0f6ff;
+    color: #28384d;
+
+    }
+
+.btn {
+    margin-bottom: 5px;
+}
+
+.grid {
+    position: relative;
+    width: 100%;
+    background: #fff;
+    color: #666666;
+    border-radius: 2px;
+    margin-bottom: 25px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.grid .grid-body {
+    padding: 15px 20px 15px 20px;
+    font-size: 0.9em;
+    line-height: 1.9em;
+}
+
+.search table tr td.rate {
+    color: #f39c12;
+    line-height: 50px;
+}
+
+.search table tr:hover {
+    cursor: pointer;
+}
+
+.search table tr td.image {
+    width: 50px;
+}
+
+.search table tr td img {
+    width: 50px;
+    height: 50px;
+}
+
+.search table tr td.rate {
+    color: #f39c12;
+    line-height: 50px;
+}
+
+.search table tr td.price {
+    font-size: 1.5em;
+    line-height: 50px;
+}
+
+.search #price1,
+.search #price2 {
+    display: inline;
+    font-weight: 600;
+}
+    </style>
+</head>
+<body>
+
+<!--Navbar-->
+{% include 'Navigationbar.html' %}
+<!--Navbar Ends-->
+
+<div class="container mt-4">
+<div class="row">
+  <!-- BEGIN SEARCH RESULT -->
+  <div class="col-md-12">
+    <div class="grid search">
+      <div class="grid-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h2><i class="fa fa-file-o"></i> Search Result For : {{term}}</h2>
+            <hr>
+            <p>Showing all results matching "{{term}}"</p>
+            
+            <div class="padding"></div>            
+            <!-- BEGIN TABLE RESULT -->
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody>
+                  {% for user in users %}
+                <tr>                  
+                  <td class="image">
+                    <a href="{% url 'getuserprofile' user.username %}"><img src="{{user.Profile_pic.url}}" alt="User Profile"></a>
+                    </td>
+                  <td class="product">
+                    <a href="{% url 'getuserprofile' user.username %}"><strong>{{user.Full_name}}</strong><br>{{user.username}}</a>
+                    </td>
+                  </a>               
+                </tr>
+                
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+            <!-- END TABLE RESULT -->
+            {% if users.has_other_pages %}
+            <!-- BEGIN PAGINATION -->
+           <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  {% if users.has_previous %}
+                  <a class="page-link" href="?page={{ users.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  {% else %}
+                    <a class="page-link disabled" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  {% endif %}
+                      {% for i in users.paginator.page_range %}
+                    {% if users.number == i %}
+                      <li class=" page-item active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                </li>
+                  <li class="page-item">
+                  {% if users.has_next %}
+                  <a class="page-link" href="?page={{ users.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                  {% else %}
+                      <a class="page-link disabled" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+
+                  {% endif %}
+                </li>
+              </ul>
+            </nav>
+            {% endif %}
+            <!-- END PAGINATION -->
+          </div>
+          <!-- END RESULT -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END SEARCH RESULT -->
+</div>
+</div>
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    
+</script>
+</body>
+</html>

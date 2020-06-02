@@ -1,0 +1,291 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from https://bootdey.com  -->
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <title>Friends Book | Home</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Home.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">
+    
+    <style type="text/css">
+    .media-left, .media-body{
+        margin-left: 12px;
+        margin-top: 9px;
+    }
+    .media-object{
+        border-radius: 25px;
+    }
+.title {
+    margin-left: 16px;
+    font-size: 16px;
+    font-weight:bold;
+}
+.komen {
+    margin-top: -8px;
+    margin-left: 16px;
+    font-size:14px;
+}
+.timeline-comment-box .user {
+    float: left;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    border-radius: 30px
+}
+
+.timeline-comment-box .user img {
+    max-width: 100%;
+    max-height: 100%
+}
+
+.timeline-comment-box .user+.input {
+    margin-left: 48px
+}
+ .new{
+    font-size: 12px;
+ }                                   
+</style>
+</head>
+<body>           
+<!--Navbar -->
+{% include 'Navigationbar.html' %}
+<!--Navbar Ends-->     
+
+<!--Main Body -->
+<main>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h5 text-blue">{{request.user.username}}</div>
+                        <div class="h7 "><strong>Name :</strong>  {{request.user.profile.Full_name}}</div>
+                        <div class="h7"><strong>About :</strong>{{request.user.profile.bio}}
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="h6 text-muted">Friends</div>
+                            <div class="h5">{{request.user.profile.friends.count}}</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="h6 text-muted">Posts</div>
+                            <div class="h5">{{request.user.posts.count}}</div>
+                        </li>
+                    </ul>
+                </div>
+                <!--
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Latest Photos</h3>
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2" class="active"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item active">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="col-lg-6 gedf-main">
+                <!--- \\\\\\\Post-->
+                <div class="card social-timeline-card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Share your Thoughts</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                <form class="form-group" method="post" action="{% url 'writepost' %}">
+                                    {% csrf_token %}
+                                    <label class="sr-only" for="message">post</label>
+                                    <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?" name="status">
+                                    </textarea>
+                                         <div class="btn-toolbar justify-content-between">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary mt-2">share</button>
+                            </div>
+                            <div class="btn-group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-globe"></i>
+                                </button>
+                                <div class="dropdown-menu " aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
+                                </div>
+                            </div>
+                        </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                <form action="" method="post" class="form-group" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="custom-file">
+                                        <button type="submit" class="btn btn-primary mt-2">Share Image</button>
+                                    </div>
+                                </form>
+                            
+                            </div>
+                        </div>
+                   
+                    </div>
+                </div>
+                <!-- Post /////-->
+                <!--- \\\\\\\Post-->
+          {% for article in articles %}                                 
+                <div class="card social-timeline-card">            
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    {% if article.Author.profile.username == request.user.username %}
+                                    <a href="{% url 'timeline' %}" style="text-decoration-line: none;"><img class="rounded-circle" width="45" src="{{article.Author.profile.Profile_pic.url}}" alt="User profile"></a>
+                                    {% else %}
+                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}"><img class="rounded-circle" width="45" src="{{article.Author.profile.Profile_pic.url}}" alt="User profile"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="ml-2">
+                                    {% if article.Author.profile.username == request.user.username %}
+                                    <a href="{% url 'timeline' %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>
+                                    <div class="h7 text-muted">{{article.Author.profile.Full_name}} </div>
+                                    {% else %}
+                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>            
+                                    <div class="h7 text-muted">{{article.Author.profile.Full_name}}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <a class="card-link" href="#">
+                            <h5 class="card-title">{{article.Status}}</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'like' id=article.id %}" class="card-link"><i class="fas fa-heart"></i>{{article.Likes.count}}</a>
+                        <a href="#" class="card-link" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><i class="fas fa-share"></i> Share</a>
+                    </div>
+                    <div class="card-footer">
+                    <div class="timeline-comment-box">
+                 <div class="user">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
+                    <div class="input">
+                        <form action="{% url 'writecomment' article.slug %}" method="post">
+                            {% csrf_token %}
+                               <div class="input-group">
+                                      {{form.comment}}
+                                      <span class="input-group-btn">
+                                      <button class="btn btn-primary rounded-corner" type="submit">Comment</button>
+                                      </span>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                            </div>
+                            {% if article.comments.all %}
+                            <div class="overflow-auto" style="height: 70px;">
+                        
+                            {% for comment in article.comments.all %}
+                             <div class="media">
+                                {% if request.user.username == comment.Author.profile.username %}
+                                    <div class="media-left">
+                                      <a href="{% url 'timeline' %}"><img src="{{comment.Author.profile.Profile_pic.url}}" class="media-object" style="width:40px"></a>
+                                    </div>
+                                {% else %}
+                                    <div class="media-left">
+                                      <a href="{% url 'getuserprofile' comment.Author.profile.username %}"><img src="{{comment.Author.profile.Profile_pic.url}}" class="media-object" style="width:40px"></a>
+                                    </div>
+                                {% endif %}
+                                    <div class="media-body">
+                                      <h4 class="media-heading title">{{comment.Author}} <span class="text-muted new" >{{comment.Time_stamp|naturaltime}}</span></h4>
+                                      <p class="komen">
+                                          {{comment.comment}}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                        
+                </div>{% endif %}</div>
+
+    {% endfor %}
+                <!-- Post /////-->           
+            </div>
+            <div class="col-lg-3">
+                <div class="card social-timeline-card">
+                    <div class="card-body">
+                        <h5 class="card-title">People you may know</h5>
+                        <ul class="friend-list">
+                            {% if friends_list %}
+                                {% for friends in friends_list %}
+                            <li>
+                                <div class="left">
+                             <a href="{% url 'getuserprofile' friends.username %}"><img src="{{friends.profile.Profile_pic.url}}" alt="User Image"></a>
+                                </div>
+                                <div class="right">
+                                    <a href="{% url 'getuserprofile' friends.username %}"><h3>{{friends.username}}</h3></a>
+                                    <p>{{friends.profile.username}}</p>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--Main Body Ends-->
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+            $("li.nav-item").click(function (e) {
+                e.preventDefault();
+                $(".nav-item").removeClass("active");
+                $(this).addClass("active");   
+            });
+        });
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+</body>
+</html>

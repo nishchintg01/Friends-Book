@@ -1,0 +1,46 @@
+
+<!--Navbar-->
+
+    <nav class="navbar navbar-expand navbar-light bg-white">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    
+                  <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> <span class="sr-only">(current)</span></a>
+      </li>
+                    
+        <li class="nav-item ">
+        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-hashtag"></i> <span class="sr-only">(current)</span></a>
+      </li>
+                    
+                        <li class="nav-item ">
+        <a class="nav-link" href="{% url 'home' %}"><i class="far fa-bell"></i> <span class="sr-only">(current)</span></a>
+      </li>
+                    
+                    <li class="nav-item ">
+        <a class="nav-link" href="{% url 'home' %}"><i class="far fa-envelope"></i> <span class="sr-only">(current)</span></a>
+      </li>
+                    
+                </ul>
+                <form action="{% url 'search' %}" method="post" class="form-inline w-100 d-none d-md-block ml-2">
+                  {% csrf_token %}
+                    <input type="text" class="form-control form-control-sm rounded-pill search border-0 px-3 w-100" placeholder="Search" name="srch-term">
+                  
+                </form>
+                <ul class="navbar-nav">
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toogle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{request.user.profile.Profile_pic.url}}" alt="profile" class="img-fluid rounded-circle" style="height: 32px; width: 60px;"></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{% url 'timeline' %}">Account </a>
+                              <a class="dropdown-item" href="{% url 'editprofile' request.user.username %}">Edit Profile</a>
+                              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+<!--Navbar-->
