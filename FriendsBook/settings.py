@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*46))%shw9q1+lqxov=(q+0t*b=hx_zz)=^fhfu5eu4q0x*dea'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["friendsbooknish.herokuapp.com","localhost"]
+ALLOWED_HOSTS = ["friendsbooknish.herokuapp.com","localhost","nish01.pythonanywhere.com"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,9 +84,9 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+#import dj_database_url
+#db_from_env = dj_database_url.config()
+#DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -126,14 +126,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-STATIC_ROOT = os.path.join(BASE_DIR,'live-static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "static"),
+#)
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'live-media')
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 LOGIN_REDIRECT_URL = 'intro'
 LOGOUT_REDIRECT_URL = 'intro'

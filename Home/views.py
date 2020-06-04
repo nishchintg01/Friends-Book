@@ -10,21 +10,24 @@ from .forms import LoginForm,CommentForm,ProfileEditForm
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-from django.core.files.storage import FileSystemStorage
+
 
 #Login Page
-def login(request):	
+def login(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
-		user = authenticate(request , username=username,password=password)
-		if user is not None:
-			Auth_login(request,user)
-			return redirect('home')
-		else:
-			messages.info(request,"Wrong Information! Try again")
-	else:
-		return redirect('intro')
+		try:
+		    user = authenticate(request , username=username,password=password)
+		    if user is not None:
+		        Auth_login(request,user)
+		        return redirect('home')
+		    else:
+		        messages.info(request,"Wrong Information! Try again")
+		        return redirect('intro')
+		except:
+		    messages.info(request,"User Does not Exist! Try again")
+		    return redirect('intro')
 	return redirect('intro')
 
 #Signup Form
@@ -55,8 +58,7 @@ def Home(request):
 	for name in friend:
 		friends.append(name.username)
 	users = User.objects.all().exclude(username=request.user.username)
-	not_friend = [] 
-	req = FriendRequest.objects.all().filter(from_user=request.user)
+	not_friend = []
 	for user in users:
 		if user.username in friends:
 			pass
@@ -67,9 +69,10 @@ def Home(request):
 		'form':form,
 		'friends_list': not_friend[:4],
 	}
-	print(not_friend[0].profile.Profile_pic.url)
 	return render(request, "home/homepage.html", context)
 
+# Update User Details
+@login_required(login_url='intro')
 def UpdateUser(request):
 	if request.method == 'POST':
 		profile = Profile.objects.get(user = request.user)
@@ -113,31 +116,41 @@ def testtingpage(request):
 # Like In a Post
 @login_required()
 def like(request,id):
-	post = get_object_or_404(Posts,id=id)
-	post.Likes.add(request.user)
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    try:
+        post = get_object_or_404(Posts,id=id)
+        post.Likes.add(request.user)
+    except:
+        messages.info(request,'Cannot like this Post! Try Again')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-# Delete existing Status 
+# Delete existing Status
 @login_required(login_url='intro')
 def DeletePost(request,slug):
-	post = get_object_or_404(Posts,slug=slug)
-	post.delete()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    try:
+        post = get_object_or_404(Posts,slug=slug)
+        post.delete()
+    except:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 # Send Request to a User
 @login_required(login_url='intro')
 def Send_request(request,id):
-	if request.user.is_authenticated:
-		user = get_object_or_404(User,id=id)
-		Frequest,created = FriendRequest.objects.get_or_create(
-			from_user = request.user,
-			to_user = user,
-			Sent_request=True
-			)
-		messages.success(request,f'Friend request has been sent to {user.username}')
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    try:
+        if request.user.is_authenticated:
+            user = get_object_or_404(User,id=id)
+            Frequest,created = FriendRequest.objects.get_or_create(
+			                    from_user = request.user,
+			                    to_user = user,
+			                    Sent_request=True
+			                    )
+            messages.success(request,f'Friend request has been sent to {user.username}')
+    except:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 # Cancel Sent Request to a Existing User
@@ -152,19 +165,23 @@ def Cancel_request(request,id):
 		Frequest.delete()
 		messages.success(request,f'Friend request cancelled {user.username}')
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-	
+
 
 # Accept User Friend Request
 @login_required(login_url='intro')
 def Accept_friend_request(request,id):
-	from_user = get_object_or_404(User,id=id)
-	frequest = FriendRequest.objects.filter(from_user=from_user,to_user=request.user).first()
-	user1 = frequest.to_user
-	user2 = from_user
-	user1.profile.friends.add(user2.profile)
-	user2.profile.friends.add(user1.profile)
-	frequest.delete()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    try:
+        from_user = get_object_or_404(User,id=id)
+        frequest = FriendRequest.objects.filter(from_user=from_user,to_user=request.user).first()
+        user1 = frequest.to_user
+        user2 = from_user
+        user1.profile.friends.add(user2.profile)
+        user2.profile.friends.add(user1.profile)
+        frequest.delete()
+    except:
+        messages.success(request,f'Friend request already sent {request.user.username}')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 # Delete Friend Request from User
@@ -197,7 +214,7 @@ def User_Profile(request,username):
 	else:
 		return redirect('intro')
 
-# Upload a new Status 
+# Upload a new Status
 @login_required(login_url='intro')
 def Status(request):
 	if request.method == 'POST':
@@ -207,7 +224,7 @@ def Status(request):
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 	return redirect('home')
 
-# Make New Comment 
+# Make New Comment
 @login_required(login_url='intro')
 def make_comment(request,slug):
 	posts = get_object_or_404(Posts,slug=slug)
@@ -280,7 +297,7 @@ def GetUserProfile(request,user):
 	return render(request,'home/getuserprofile.html',{'profile':profile,'is_friend':is_friend,
 		'friends':friends,'posts':posts,'form':form,'author':author})
 
-	
+
 def DeleteFriend(request,user):
 	from_user = get_object_or_404(User,id=user)
 	user1= from_user
