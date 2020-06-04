@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Freakapp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FriendsBook.settings')
 
 application = get_wsgi_application()
