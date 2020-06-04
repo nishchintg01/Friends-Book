@@ -25,7 +25,7 @@ SECRET_KEY = '*46))%shw9q1+lqxov=(q+0t*b=hx_zz)=^fhfu5eu4q0x*dea'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["friendsbooknish.herokuapp.com","localhost"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
