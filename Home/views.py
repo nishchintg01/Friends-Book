@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Posts
-from django.contrib.auth import authenticate ,get_user_model,logout
+from django.contrib.auth import authenticate ,get_user_model,logout,update_session_auth_hash
 from django.contrib.auth import login as Auth_login
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -10,7 +10,7 @@ from .forms import LoginForm,CommentForm,ProfileEditForm
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-
+from django.contrib.auth.forms import PasswordChangeForm
 
 #Login Page
 def login(request):
@@ -107,7 +107,8 @@ def ProfileForm(request,username):
 			return render(request,'home/profiledit.html',{'form':form})
 	form  = ProfileEditForm(instance=request.user.profile)
 	Userform = LoginForm(instance=request.user)
-	return render(request,'home/profiledit.html',{'form':form,'userform':Userform})
+	changepasswordform = PasswordChangeForm(request.user, request.POST)
+	return render(request,'home/profiledit.html',{'form':form,'userform':Userform,'changepasswordform':changepasswordform})
 
 def testtingpage(request):
 	return render(request,'home/Text.html')
@@ -306,4 +307,18 @@ def DeleteFriend(request,user):
 	user2.profile.friends.remove(user1.profile)
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
+# Password Change View
+def Change_Password(request):
+	if request.method == "POST":
+		try:
+			form = PasswordChangeForm(request.user,request.POST)
+			if form.is_valid():
+				user=form.save()
+				update_session_auth_hash(request,user)
+				messages.success(request,"User password Changed Succesfully")
+			messages.success(request,"The password you provided didn't match ! Try Again")
+		except:
+			messages.success(request,"The password you provided didn't match ! Try Again")
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
