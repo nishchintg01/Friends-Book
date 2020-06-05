@@ -1,41 +1,4 @@
-     .media-left, .media-body{
-        margin-left: 12px;
-        margin-top: 9px;
-    }
-    .media-object{
-        border-radius: 25px;
-    }
-.title {
-    margin-left: 16px;
-    font-size: 16px;
-    font-weight:bold;
-}
-.komen {
-    margin-top: -8px;
-    margin-left: 16px;
-    font-size:14px;
-}
-.timeline-comment-box .user {
-    float: left;
-    width: 34px;
-    height: 34px;
-    overflow: hidden;
-    border-radius: 30px
-}
-
-.timeline-comment-box .user img {
-    max-width: 100%;
-    max-height: 100%
-}
-
-.timeline-comment-box .user+.input {
-    margin-left: 48px
-}
- .new{
-    font-size: 12px;
- } 
-     
-    body {
+body {
     background-color: #f0f6ff;
     color: #28384d;
 

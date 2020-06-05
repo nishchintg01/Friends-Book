@@ -4,17 +4,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--  This file has been downloaded from https://bootdey.com  -->
-    <!--  All snippets are MIT license https://bootdey.com/license -->
     <title>Friends Book | Home</title>
    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/Home.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">
-    
+
     <style type="text/css">
     .media-left, .media-body{
         margin-left: 12px;
@@ -51,13 +49,13 @@
 }
  .new{
     font-size: 12px;
- }                                   
+ }
 </style>
 </head>
-<body>           
+<body>
 <!--Navbar -->
 {% include 'Navigationbar.html' %}
-<!--Navbar Ends-->     
+<!--Navbar Ends-->
 
 <!--Main Body -->
 <main>
@@ -158,16 +156,16 @@
                                         <button type="submit" class="btn btn-primary mt-2">Share Image</button>
                                     </div>
                                 </form>
-                            
+
                             </div>
                         </div>
-                   
+
                     </div>
                 </div>
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
-          {% for article in articles %}                                 
-                <div class="card social-timeline-card">            
+          {% for article in articles %}
+                <div class="card social-timeline-card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
@@ -183,7 +181,7 @@
                                     <a href="{% url 'timeline' %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>
                                     <div class="h7 text-muted">{{article.Author.profile.Full_name}} </div>
                                     {% else %}
-                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>            
+                                    <a href="{% url 'getuserprofile' article.Author.profile.username %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>
                                     <div class="h7 text-muted">{{article.Author.profile.Full_name}}</div>
                                     {% endif %}
                                 </div>
@@ -193,7 +191,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        
+
                         <a class="card-link" href="#">
                             <h5 class="card-title">{{article.Status}}</h5>
                         </a>
@@ -220,8 +218,7 @@
                               </div>
                             </div>
                             {% if article.comments.all %}
-                            <div class="overflow-auto" style="height: 70px;">
-                        
+                            <div class="overflow-auto" style="height:60px;">
                             {% for comment in article.comments.all %}
                              <div class="media">
                                 {% if request.user.username == comment.Author.profile.username %}
@@ -241,11 +238,11 @@
                                     </div>
                                 </div>
                                 {% endfor %}
-                        
+
                 </div>{% endif %}</div>
 
     {% endfor %}
-                <!-- Post /////-->           
+                <!-- Post /////-->
             </div>
             <div class="col-lg-3">
                 <div class="card social-timeline-card">
@@ -273,14 +270,16 @@
     </div>
 </main>
 <!--Main Body Ends-->
-
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript">
      $(document).ready(function() {
             $("li.nav-item").click(function (e) {
                 e.preventDefault();
                 $(".nav-item").removeClass("active");
-                $(this).addClass("active");   
+                $(this).addClass("active");
             });
         });
 $(document).ready(function(){

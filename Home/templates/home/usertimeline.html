@@ -4,15 +4,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--  This file has been downloaded from https://bootdey.com  -->
-    <!--  All snippets are MIT license https://bootdey.com/license -->
     <title>Friends Book | Home</title>
    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navstyle.css' %}">
     <style type="text/css">
     .media-left, .media-body{
         margin-left: 12px;
@@ -49,7 +46,7 @@
 }
  .new{
     font-size: 12px;
- }   
+ }
  .card {
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
@@ -154,10 +151,10 @@ img.profile-photo-lg{
 
 </style>
 </head>
-<body>           
+<body>
 <!--Navbar -->
 {% include 'Navigationbar.html' %}
-<!--Navbar Ends-->     
+<!--Navbar Ends-->
 
 <!--Main Body -->
 <div class="container mt-4">
@@ -193,7 +190,7 @@ img.profile-photo-lg{
                                             <div class="col-5">
                                                 <button class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="485">
                                                     <i class="fa fa-user"> {{friends.count}} Friends</i>
-                                                </button> 
+                                                </button>
                                             </div>
                                             <div class="col-5">
                                                 <button class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="90">
@@ -201,7 +198,7 @@ img.profile-photo-lg{
                                                 </button>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
 
@@ -248,7 +245,7 @@ img.profile-photo-lg{
                                         <a class="nav-link" data-toggle="tab" href="#about" role="tab">About</a>
                                         <div class="slide"></div>
                                     </li>
-                              
+
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#friends" role="tab">Friends</a>
                                         <div class="slide"></div>
@@ -267,8 +264,8 @@ img.profile-photo-lg{
                                                     </div>
                                                     <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
                                                               <!--- \\\\\\\Post-->
-          {% for article in posts %}                                 
-                <div class="card social-timeline-card">            
+          {% for article in posts %}
+                <div class="card social-timeline-card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
@@ -277,7 +274,7 @@ img.profile-photo-lg{
                                 </div>
                                 <div class="ml-2">
                                     <a href="{% url 'timeline' %}" style="text-decoration-line: none;"><div class="h5 m-0 text-blue">{{article.Author.profile.username}}</div></a>
-                                    <div class="h7 text-muted">{{article.Author.profile.Full_name}} </div>            
+                                    <div class="h7 text-muted">{{article.Author.profile.Full_name}} </div>
                                 </div>
                             </div>
                             <div>
@@ -285,7 +282,7 @@ img.profile-photo-lg{
                         </div>
                     </div>
                     <div class="card-body">
-                        
+
                             <h5 class="card-title">{{article.Status}}</h5>
                                             </div>
                     <div class="card-footer">
@@ -311,7 +308,7 @@ img.profile-photo-lg{
                             </div>
                             {% if article.comments.all %}
                             <div class="overflow-auto" style="height: 70px;">
-                        
+
                             {% for comment in article.comments.all %}
                              <div class="media">
                                 {% if request.user.username == comment.Author.profile.username %}
@@ -335,18 +332,18 @@ img.profile-photo-lg{
                                     </div>
                                 </div>
                                 {% endfor %}
-                        
+
                 </div>{% endif %}</div>
 
     {% endfor %}
-                <!-- Post /////--> 
+                <!-- Post /////-->
                                                     </div>
                                                 </div>
                                             </div>
-                                    
+
                                         </div>
                                     </div>
-                            
+
                                 </div>
 
                                 <div class="tab-pane" id="about">
@@ -382,7 +379,7 @@ img.profile-photo-lg{
                                                                             <th class="social-label b-none">Martail Status</th>
                                                                             <td class="social-user-name b-none text-muted">{{request.user.profile.Relation_status}}</td>
                                                                         </tr>
-                                                                  
+
                                                                     </tbody>
                                                                 </table>
                                                             </form>
@@ -412,7 +409,7 @@ img.profile-photo-lg{
                                                                         <th class="social-label b-none">Email Address</th>
                                                                         <td class="social-user-name b-none text-muted">{{request.user.profile.Email}}</td>
                                                                     </tr>
-                                                                
+
                                                                     <tr>
                                                                         <th class="social-label b-none p-b-0">Website</th>
                                                                         <td class="social-user-name b-none p-b-0 text-muted">{{request.user.profile.website}}</td>
@@ -506,7 +503,7 @@ img.profile-photo-lg{
             </div>
         </div>
                                       <!--Friends Section-->
-                            
+
                                     </div>
                                 </div>
                             </div>
@@ -519,19 +516,14 @@ img.profile-photo-lg{
 </div>
 </div>
 <!--Main Body Ends-->
-
-<script src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script type="text/javascript">
-     $(document).ready(function() {
-            $("li.nav-item").click(function (e) {
-                e.preventDefault();
-                $(".nav-item").removeClass("active");
-                $(this).addClass("active");   
-            });
-        });
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </body>
 </html>
