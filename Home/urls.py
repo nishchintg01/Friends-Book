@@ -32,14 +32,10 @@ urlpatterns = [
 		path('Friend-request/Delete/<int:id>',Delete_friend_request,name="delete_request"),
 		path('removeFriend/<int:user>',DeleteFriend,name="removefriend"),
 	    path('password_change/',Change_Password,name='password_change'),
-
-
-	    # path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/passwordresetdone.html'),
-	    #  		name='password_reset_done'),
-	    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='passwordresetconfirm'),
-	    # path('password_reset/', auth_views.PasswordResetView.as_view(), name='passwordreset'),
-	    # path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/passwordresetcomplete.html'),
-	    #  		name='password_reset_complete'),
+	    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="authentication/passwordreset.html"), name='password_reset'),
+	    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='authentication/passwordresetsent.html'),name='password_reset_done'),
+	    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="authentication/reset_password.html"), name='password_reset_confirm'),
+	    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/passwordresetcomplete.html'),name='password_reset_complete'),
 		
 
 ]

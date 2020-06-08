@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Posts
 from django.contrib.auth import authenticate ,get_user_model,logout,update_session_auth_hash
 from django.contrib.auth import login as Auth_login
 from django.contrib.auth.models import User
